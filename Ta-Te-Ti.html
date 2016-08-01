@@ -17,19 +17,19 @@
             <div class="container" id="juego">
             <table>
                 <tr>
-                    <td><input class="btnTTT" type="button" value=" " id="a1" onclick='turno(this)'/></td>
-                    <td><input class="btnTTT" type="button" value=" " id="a2" onclick='turno(this)'/></td>
-                    <td><input class="btnTTT" type="button" value=" " id="a3" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="1" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="2" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="3" onclick='turno(this)'/></td>
                 </tr>
                 <tr>
-                    <td><input class="btnTTT" type="button" value=" " id="b1" onclick='turno(this)'/></td>
-                    <td><input class="btnTTT" type="button" value=" " id="b2" onclick='turno(this)'/></td>
-                    <td><input class="btnTTT" type="button" value=" " id="b3" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="4" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="5" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="6" onclick='turno(this)'/></td>
                 </tr>
                 <tr>
-                    <td><input class="btnTTT" type="button" value=" " id="c1" onclick='turno(this)'/></td>
-                    <td><input class="btnTTT" type="button" value=" " id="c2" onclick='turno(this)'/></td>
-                    <td><input class="btnTTT" type="button" value=" " id="c3" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="7" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="8" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="9" onclick='turno(this)'/></td>
                 </tr>
             </table>
             </div>
@@ -38,25 +38,58 @@
             var juego = document.getElementById("juego");
             var botones = juego.getElementsByClassName("btnTTT");
             function turno(boton){
-                var caracter;
+                var jugador;
                 if(numeroDeTurno%2==0){
-                    caracter="X";
+                    jugador="X";
                 }else{
-                    caracter="O";
+                    jugador="O";
                 }
-                boton.value=caracter;
+                boton.value=jugador;
                 numeroDeTurno++;
                 boton.disabled=true;
+                verificarGanador();
             }
             function reiniciar(){
                 numeroDeTurno=0;
-                for (var i = botones.length; i--; ) {
+                for (var i = 0; i<botones.length; i++) {
                     botones[i].disabled=false;
                     botones[i].value=" ";
                 }
             }
-            function ganador(){
-                
+            function verificarGanador(){
+                var gano=false;
+                var ganador;
+                if(botones[0].value==botones[1].value&&botones[1].value==botones[2].value&&botones[0].value!=" "){
+                    gano=true;
+                    ganador=botones[0].value;
+                }else if(botones[0].value==botones[3].value&&botones[3].value==botones[6].value&&botones[0].value!=" "){
+                    gano=true;
+                    ganador=botones[0].value;
+                }else if(botones[0].value==botones[4].value&&botones[4].value==botones[8].value&&botones[0].value!=" "){
+                    gano=true;
+                    ganador=botones[0].value;
+                }else if(botones[3].value==botones[4].value&&botones[4].value==botones[5].value&&botones[3].value!=" "){
+                    gano=true;
+                    ganador=botones[3].value;
+                }else if(botones[6].value==botones[7].value&&botones[7].value==botones[8].value&&botones[6].value!=" "){
+                    gano=true;
+                    ganador=botones[6].value;
+                }else if(botones[2].value==botones[5].value&&botones[5].value==botones[8].value&&botones[2].value!=" "){
+                    gano=true;
+                    ganador=botones[2].value;
+                }else if(botones[2].value==botones[4].value&&botones[4].value==botones[6].value&&botones[2].value!=" "){
+                    gano=true;
+                    ganador=botones[2].value;
+                }else if(botones[1].value==botones[4].value&&botones[4].value==botones[7].value&&botones[1].value!=" "){
+                    gano=true;
+                    ganador=botones[1].value;
+                }
+                if(gano==true){
+                    alert("Gano el jugador: "+ganador);
+                    for (var i =0; i<botones.length;i++ ) {
+                        botones[i].disabled=true;
+                    }
+                }
             }
             </script>
         </form>
