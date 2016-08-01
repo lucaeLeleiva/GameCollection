@@ -12,25 +12,53 @@
                 <li><a href="index.html">Volver al menu principal</a></li>
             </ul>
         </nav>
-        <div class="container">
+        <form>
+            <input class="btnReiniciar" type="button" value="Reiniciar" id="r" onclick='reiniciar()'/>
+            <div class="container" id="juego">
             <table>
                 <tr>
-                    <td><input class="btnTTT" type="button" name="a1"/></td>
-                    <td><input class="btnTTT" type="button" name="a2"/></td>
-                    <td><input class="btnTTT" type="button" name="a3"/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="a1" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="a2" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="a3" onclick='turno(this)'/></td>
                 </tr>
                 <tr>
-                    <td><input class="btnTTT" type="button" name="b1"/></td>
-                    <td><input class="btnTTT" type="button" name="b2"/></td>
-                    <td><input class="btnTTT" type="button" name="b3"/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="b1" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="b2" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="b3" onclick='turno(this)'/></td>
                 </tr>
                 <tr>
-                    <td><input class="btnTTT" type="button" name="c1"/></td>
-                    <td><input class="btnTTT" type="button" name="c2"/></td>
-                    <td><input class="btnTTT" type="button" name="c3"/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="c1" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="c2" onclick='turno(this)'/></td>
+                    <td><input class="btnTTT" type="button" value=" " id="c3" onclick='turno(this)'/></td>
                 </tr>
             </table>
-        </div>
-        <script type="text/javascript" src="js/TaTeTi.js"></script>
+            </div>
+            <script type="text/javascript">
+            var numeroDeTurno = 0;
+            var juego = document.getElementById("juego");
+            var botones = juego.getElementsByClassName("btnTTT");
+            function turno(boton){
+                var caracter;
+                if(numeroDeTurno%2==0){
+                    caracter="X";
+                }else{
+                    caracter="O";
+                }
+                boton.value=caracter;
+                numeroDeTurno++;
+                boton.disabled=true;
+            }
+            function reiniciar(){
+                numeroDeTurno=0;
+                for (var i = botones.length; i--; ) {
+                    botones[i].disabled=false;
+                    botones[i].value=" ";
+                }
+            }
+            function ganador(){
+                
+            }
+            </script>
+        </form>
     </body>
 </html>
