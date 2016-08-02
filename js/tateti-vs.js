@@ -13,7 +13,7 @@ function turno(boton){
     boton.disabled=true;
     if(verificarGanador()){
         alert("Gano el jugador: "+jugador);
-    }else if(numeroDeTurno=9){
+    }else if(numeroDeTurno==9){
         alert("Se ha empatado");
     }
 }
