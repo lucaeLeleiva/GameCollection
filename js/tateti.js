@@ -13,8 +13,7 @@ function turno(boton){
     boton.disabled=true;
     if(verificarGanador()){
         alert("Gano el jugador.");
-    }
-    if(numeroDeTurno<9){
+    }else if(numeroDeTurno<9){
         ia();
         if(verificarGanador()){
             alert("Gano la maquina.");
