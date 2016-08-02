@@ -12,33 +12,35 @@
     </head>
     <body>
         <div class="page-header">
-            <h1>Ta-Te-Ti</h1>
+            <h1 class="text-center">Ta-Te-Ti</h1>
         </div>
         <nav>
             <ul class="nav nav-pills nav-stacked">
-                <li><a href="index.html">Volver al menu principal</a></li>
+                <li><a href="index.html" class="text-center">Volver al menu principal</a></li>
             </ul>
         </nav>
         <form>
             <div class="container-fluid">
-                <input class="btnReiniciar" type="button" value="Reiniciar" id="r" onclick='reiniciar()'/>
+                <input class="btn btn-primary btn-lg btn-block" type="button" value="Reiniciar" id="r" onclick='reiniciar()'/>
             </div>
             <div class="container-fluid" id="juego">
-                <div class="row">
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="1" onclick='turno(this)'/></div>
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="2" onclick='turno(this)'/></div>
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="3" onclick='turno(this)'/></div>
-                </div>
-                <div class="row">    
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="4" onclick='turno(this)'/></div>
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="5" onclick='turno(this)'/></div>
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="6" onclick='turno(this)'/></div>
-                </div>    
-                <div class="row">
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="7" onclick='turno(this)'/></div>
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="8" onclick='turno(this)'/></div>
-                    <div class="col-md-4"><input class="btnTTT" type="button" value=" " id="9" onclick='turno(this)'/></div>
-                </div>
+                <table class="tabla">
+                    <tr class="fila">
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="1" onclick='turno(this)'/></td>
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="2" onclick='turno(this)'/></td>
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="3" onclick='turno(this)'/></td>
+                    </tr>
+                    <tr class="fila">    
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="4" onclick='turno(this)'/></td>
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="5" onclick='turno(this)'/></td>
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="6" onclick='turno(this)'/></td>
+                    </tr>
+                    <tr class="fila">
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="7" onclick='turno(this)'/></td>
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="8" onclick='turno(this)'/></td>
+                        <td class="casillero"><input class="btn btn-primary btn-lg btn-block" type="button" value=" " id="9" onclick='turno(this)'/></td>
+                    </tr>
+                </table>
             </div>
             <script type="text/javascript" src="js/tateti.js"></script>
         </form>
