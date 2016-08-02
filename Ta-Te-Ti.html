@@ -33,64 +33,7 @@
                 </tr>
             </table>
             </div>
-            <script type="text/javascript">
-            var numeroDeTurno = 0;
-            var juego = document.getElementById("juego");
-            var botones = juego.getElementsByClassName("btnTTT");
-            function turno(boton){
-                var jugador;
-                if(numeroDeTurno%2==0){
-                    jugador="X";
-                }else{
-                    jugador="O";
-                }
-                boton.value=jugador;
-                numeroDeTurno++;
-                boton.disabled=true;
-                verificarGanador();
-            }
-            function reiniciar(){
-                numeroDeTurno=0;
-                for (var i = 0; i<botones.length; i++) {
-                    botones[i].disabled=false;
-                    botones[i].value=" ";
-                }
-            }
-            function verificarGanador(){
-                var gano=false;
-                var ganador;
-                if(botones[0].value==botones[1].value&&botones[1].value==botones[2].value&&botones[0].value!=" "){
-                    gano=true;
-                    ganador=botones[0].value;
-                }else if(botones[0].value==botones[3].value&&botones[3].value==botones[6].value&&botones[0].value!=" "){
-                    gano=true;
-                    ganador=botones[0].value;
-                }else if(botones[0].value==botones[4].value&&botones[4].value==botones[8].value&&botones[0].value!=" "){
-                    gano=true;
-                    ganador=botones[0].value;
-                }else if(botones[3].value==botones[4].value&&botones[4].value==botones[5].value&&botones[3].value!=" "){
-                    gano=true;
-                    ganador=botones[3].value;
-                }else if(botones[6].value==botones[7].value&&botones[7].value==botones[8].value&&botones[6].value!=" "){
-                    gano=true;
-                    ganador=botones[6].value;
-                }else if(botones[2].value==botones[5].value&&botones[5].value==botones[8].value&&botones[2].value!=" "){
-                    gano=true;
-                    ganador=botones[2].value;
-                }else if(botones[2].value==botones[4].value&&botones[4].value==botones[6].value&&botones[2].value!=" "){
-                    gano=true;
-                    ganador=botones[2].value;
-                }else if(botones[1].value==botones[4].value&&botones[4].value==botones[7].value&&botones[1].value!=" "){
-                    gano=true;
-                    ganador=botones[1].value;
-                }
-                if(gano==true){
-                    alert("Gano el jugador: "+ganador);
-                    for (var i =0; i<botones.length;i++ ) {
-                        botones[i].disabled=true;
-                    }
-                }
-            }
+            <script type="text/javascript" src="js/TaTeTi.js">
             </script>
         </form>
     </body>
