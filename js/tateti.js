@@ -59,7 +59,6 @@ function verificarGanador(){
         ganador=botones[1].value;
     }
     if(gano==true){
-        alert("Gano el jugador: "+ganador);
         for (var i =0; i<botones.length;i++ ) {
             botones[i].disabled=true;
         }
