@@ -12,18 +12,16 @@ function turno(boton){
     numeroDeTurno++;
     boton.disabled=true;
     if(verificarGanador()){
-        reiniciar();   
+        alert("Gano el jugador.");
     }
     if(numeroDeTurno<9){
         ia();
+        if(verificarGanador()){
+            alert("Gano la maquina.");
+        }
     }else{
         alert("Se ha empatado");
-        reiniciar()
     }
-    if(verificarGanador()){
-        reiniciar();
-    }
-    
 }
 function reiniciar(){
     numeroDeTurno=0;
