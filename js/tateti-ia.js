@@ -3,11 +3,6 @@ var juego = document.getElementById("juego");
 var botones = juego.getElementsByClassName("btn btn-primary btn-lg btn-block");
 function turno(boton){
     var jugador="X";
-    /*if(numeroDeTurno%2==0){
-        jugador="X";
-    }else{
-        jugador="O";
-    }*/
     boton.value=jugador;
     numeroDeTurno++;
     boton.disabled=true;
@@ -173,7 +168,4 @@ function ia(){
     }
     botonAElegir.value="O";
     botonAElegir.disabled=true;
-}
-function getWidth(){
-    return botones[0].width();
 }
