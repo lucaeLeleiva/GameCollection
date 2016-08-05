@@ -7,3 +7,4 @@
 ### TODO's
 - Agregar Buscaminas.
 - Agregar Sudoku.
+- Agregar Viborita.
