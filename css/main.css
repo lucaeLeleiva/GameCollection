@@ -4,8 +4,17 @@
 .fila{
     width:100%;
 }
-.casillero{
+.casillero .tateti{
     width:30%;
+}
+.casillero .buscaminasFacil{
+    width:10%;
+}
+.casillero .buscaminasMedio{
+    width:3%;
+}
+.casillero .buscaminasDificil{
+    width:1%;
 }
 #juego .btn{
     padding-top: 20%;
