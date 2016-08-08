@@ -1,15 +1,16 @@
 window.onload=function(){
     dificultad();
-}
+};
 function dificultad(){
+    document.getElementById("dificultades").style.display="initial";
     document.getElementById("r").style.display="none";
     document.getElementById("tablero").style.display="none";
-    var fila1=document.createElement("tr");
-    var fila2=document.createElement("tr");
-    var fila3=document.createElement("tr");
-    var dato1=document.createElement("td");
-    var dato2=document.createElement("td");
-    var dato3=document.createElement("td");
+    var fila1=document.createElement("div");
+    var fila2=document.createElement("div");
+    var fila3=document.createElement("div");
+    fila1.setAttribute("class","row");
+    fila2.setAttribute("class","row");
+    fila3.setAttribute("class","row");
     var dificultadFacilBoton=document.createElement("input");
     var dificultadMediaBoton=document.createElement("input");
     var dificultadDificilBoton=document.createElement("input");
@@ -28,27 +29,24 @@ function dificultad(){
     dificultadFacilBoton.setAttribute("class","btn btn-primary btn-lg btn-block");
     dificultadMediaBoton.setAttribute("class","btn btn-primary btn-lg btn-block");
     dificultadDificilBoton.setAttribute("class","btn btn-primary btn-lg btn-block");
-    dato1.appendChild(dificultadFacilBoton);
-    dato2.appendChild(dificultadMediaBoton);
-    dato3.appendChild(dificultadDificilBoton);
-    fila1.appendChild(dato1);
-    fila2.appendChild(dato2);
-    fila3.appendChild(dato3);
+    fila1.appendChild(dificultadFacilBoton);
+    fila2.appendChild(dificultadMediaBoton);
+    fila3.appendChild(dificultadDificilBoton);
     document.getElementById("dificultades").appendChild(fila1);
     document.getElementById("dificultades").appendChild(fila2);
     document.getElementById("dificultades").appendChild(fila3);
 }
 function dibujarTableroFacil(){
     document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="block";
-    document.getElementById("tablero").style.display="block";
+    document.getElementById("r").style.display="initial";
+    document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     for(var i=0;i<10;i++){
-        var fila=document.createElement("tr");
+        var fila=document.createElement("div");
         fila.setAttribute("class","fila");
         for(var j=0;j<10;j++){
-            var contenedor=document.createElement("td");
-            contenedor.setAttribute("class","casillero buscaminasFacil");
+            var contenedor=document.createElement("div");
+            contenedor.setAttribute("class","casilleroBuscaMinasFacil");
             var boton=document.createElement("input");
             boton.onclick=verificar;
             boton.setAttribute("class","btn btn-primary btn-lg btn-block");
@@ -63,15 +61,15 @@ function dibujarTableroFacil(){
 }
 function dibujarTableroMedio(){
     document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="block";
-    document.getElementById("tablero").style.display="block";
+    document.getElementById("r").style.display="initial";
+    document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     for(var i=0;i<30;i++){
-        var fila=document.createElement("tr");
+        var fila=document.createElement("div");
         fila.setAttribute("class","fila");
         for(var j=0;j<30;j++){
-            var contenedor=document.createElement("td");
-            contenedor.setAttribute("class","casillero buscaminasMedio");
+            var contenedor=document.createElement("div");
+            contenedor.setAttribute("class","casilleroBuscaMinasMedio");
             var boton=document.createElement("input");
             boton.onclick=verificar;
             boton.setAttribute("class","btn btn-primary btn-lg btn-block");
@@ -86,15 +84,15 @@ function dibujarTableroMedio(){
 }
 function dibujarTableroDificil(){
     document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="block";
-    document.getElementById("tablero").style.display="block";
+    document.getElementById("r").style.display="initial";
+    document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     for(var i=0;i<50;i++){
-        var fila=document.createElement("tr");
+        var fila=document.createElement("div");
         fila.setAttribute("class","fila");
         for(var j=0;j<50;j++){
-            var contenedor=document.createElement("td");
-            contenedor.setAttribute("class","casillero buscaminasDificil");
+            var contenedor=document.createElement("div");
+            contenedor.setAttribute("class","casilleroBuscaMinasDificil");
             var boton=document.createElement("input");
             boton.onclick=verificar;
             boton.setAttribute("class","btn btn-primary btn-lg btn-block");

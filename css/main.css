@@ -1,22 +1,28 @@
 .tabla{
     width:100%;
 }
+.lista{
+    width: 100%;
+}
 .fila{
     width:100%;
 }
-.casillero .tateti{
+.casilleroTaTeTi{
     width:30%;
 }
-.casillero .buscaminasFacil{
+.casilleroBuscaMinasFacil{
     width:10%;
+    display:inline-block;
 }
-.casillero .buscaminasMedio{
-    width:3%;
+.casilleroBuscaMinasMedio{
+    width:3.333333333%;
+    display:inline-block;
 }
-.casillero .buscaminasDificil{
-    width:1%;
+.casilleroBuscaMinasDificil{
+    width:2%;
+    display:inline-block;
 }
-#juego .btn{
+#juegotateti .btn{
     padding-top: 20%;
     padding-bottom: 20%;
 }
