@@ -117,12 +117,12 @@ function colocarMinas(cantidadDeMinas){
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
     for(;cantidadDeMinas>0;cantidadDeMinas--){
-        var numeroDeBoton=Math.floor(Math.random()*(cantidadDeMinasOriginal - 0));
+        var numeroDeBoton=Math.floor(Math.random()*(cantidadDeMinasOriginal*cantidadDeMinasOriginal));
         if(botones[numeroDeBoton].value=="0"){
             botones[numeroDeBoton].value="-1";
         }else if(botones[numeroDeBoton].value=="-1"){
             while(botones[numeroDeBoton].value=="-1"){
-                numeroDeBoton=Math.floor(Math.random()*(cantidadDeMinasOriginal - 0));
+                numeroDeBoton=Math.floor(Math.random()*(cantidadDeMinasOriginal*cantidadDeMinasOriginal));
             }
             botones[numeroDeBoton].value="-1";
         }
