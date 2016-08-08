@@ -211,17 +211,17 @@ function verificarSubCasillero(boton){
 function contarOcultas(boton){
     var id=boton.id;
     var indiceGuion=id.indexOf('-');
-    var idNumero1=id.substring(0,indiceGuion);
-    var idNumero2=id.substring(indiceGuion,(id.length-1));
+    var idNumero1=id.substring(0,(indiceGuion));
+    var idNumero2=id.substring((indiceGuion+1));
     var cantidadDeMinas=0;
-    var boton1=document.getElementById((idNumero1-1)+"-"+(idNumero2-1));
-    var boton2=document.getElementById((idNumero1)+"-"+(idNumero2-1));
-    var boton3=document.getElementById((idNumero1+1)+"-"+(idNumero2-1));
-    var boton4=document.getElementById((idNumero1-1)+"-"+(idNumero2));
-    var boton5=document.getElementById((idNumero1+1)+"-"+(idNumero2));
-    var boton6=document.getElementById((idNumero1-1)+"-"+(idNumero2+1));
-    var boton7=document.getElementById((idNumero1)+"-"+(idNumero2+1));
-    var boton8=document.getElementById((idNumero1+1)+"-"+(idNumero2+1));
+    var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
+    var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
+    var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
     if(boton1.value=="-1"){
         cantidadDeMinas++;
     }
@@ -248,3 +248,11 @@ function contarOcultas(boton){
     }
     return cantidadDeMinas;
 }
+/*
+    var id="30-30"
+    var indiceGuion=id.indexOf('-');
+    var idNumero1=id.substring(0,(indiceGuion));
+    var idNumero2=id.substring((indiceGuion+1));
+    var string=((parseInt(idNumero1)+1).toString())+"-"+(idNumero2 + 1);
+    alert(string);
+*/
