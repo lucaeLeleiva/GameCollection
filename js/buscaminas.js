@@ -1,5 +1,6 @@
 window.onload=function(){
     dificultad();
+    document.getElementById("r").onclick=reiniciar;
 };
 function dificultad(){
     document.getElementById("dificultades").style.display="initial";
@@ -140,6 +141,8 @@ function verificar(){
         for(var i=0;i<botones.length;i++){
             botones[i].disabled=true;
         }
+        this.style.borderColor=obtenerColor(-1);
+        this.style.background=obtenerColor(-1);
         alert("Has perdido.");
     }else if(this.value=="0"){
         var minas=contarOcultas(this);
@@ -158,9 +161,12 @@ function verificar(){
                     verificarSubCasillero(botonesAVerificar[i]);
                 }
             }
-            this.style.background="#1530AE";
+            this.style.borderColor=obtenerColor(minas);
+            this.style.background=obtenerColor(minas);
         }else{
             this.setAttribute("value",minas);
+            this.style.borderColor=obtenerColor(minas);
+            this.style.background=obtenerColor(minas);
         }
     }
 }
@@ -189,8 +195,12 @@ function verificarSubCasillero(boton){
                     }
                 }
             }
+            boton.style.borderColor=obtenerColor(minas);
+            boton.style.background=obtenerColor(minas);
         }else{
             boton.setAttribute("value",minas);
+            boton.style.borderColor=obtenerColor(minas);
+            boton.style.background=obtenerColor(minas);
         }
     }
 }
@@ -217,4 +227,38 @@ function contarOcultas(boton){
         }
     }
     return cantidadDeMinas;
+}
+function obtenerColor(numeroDeMinas){
+    if(numeroDeMinas==0){
+        return "#AFBDFF";
+    }else if(numeroDeMinas==1){
+        return "#00AD00";
+    }else if(numeroDeMinas==3){
+        return "#D9D900";
+    }else if(numeroDeMinas==4){
+        return "#D99100";
+    }else if(numeroDeMinas==5){
+        return "#D93E00";
+    }else if(numeroDeMinas==6){
+        return "#AE0062";
+    }else if(numeroDeMinas==7){
+        return "#5D0091";
+    }else if(numeroDeMinas==8){
+        return "#531DFF";
+    }else if(numeroDeMinas==2){
+        return "#96CD00";
+    }else if(numeroDeMinas==-1){
+        return "#D90000";
+    }
+}
+function reiniciar(){
+    var tablero=document.getElementById("tablero");
+    var botones=tablero.getElementsByTagName("input");
+    for(var i=0;i<botones.length;i++){
+        botones[i].disabled=false;
+        botones[i].value="0";
+        botones[i].style.borderColor="#337ab7";
+        botones[i].style.background="#337ab7";
+    }
+    colocarMinas(Math.sqrt(botones.length));
 }
