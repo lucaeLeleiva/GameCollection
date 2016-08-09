@@ -1,5 +1,6 @@
 window.onload=function(){
     dificultad();
+    document.getElementById("r").onclick=reiniciar;
 };
 function dificultad(){
     document.getElementById("dificultades").style.display="initial";
@@ -129,82 +130,77 @@ function colocarMinas(cantidadDeMinas){
     }
 }
 function verificar(){
+    this.disabled=true;
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
     var id=this.id;
     var indiceGuion=id.indexOf('-');
-    var idNumero1=id.substring(0,indiceGuion);
-    var idNumero2=id.substring(indiceGuion,(id.length - 1));
+    var idNumero1=id.substring(0,(indiceGuion));
+    var idNumero2=id.substring((indiceGuion+1));
     if(this.value=="-1"){
         for(var i=0;i<botones.length;i++){
             botones[i].disabled=true;
         }
+        this.style.borderColor=obtenerColor(-1);
+        this.style.background=obtenerColor(-1);
         alert("Has perdido.");
     }else if(this.value=="0"){
         var minas=contarOcultas(this);
         if(minas==0){
-            if((document.getElementById((idNumero1-1).toString()+"-"+(idNumero2 - 1).toString()))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1 - 1).toString()+"-"+(idNumero2 - 1).toString()));
+            var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+            var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+            var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+            var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
+            var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
+            var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+            var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+            var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+            var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+            for(var i=0;i<botonesAVerificar.length;i++){
+                if(botonesAVerificar[i]!=null){
+                    verificarSubCasillero(botonesAVerificar[i]);
+                }
             }
-            if((document.getElementById((idNumero1).toString()+"-"+(idNumero2 - 1).toString()))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1).toString()+"-"+(idNumero2 - 1).toString()));
-            }
-            if((document.getElementById((idNumero1 - 1).toString()+"-"+(idNumero2).toString()))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1 - 1).toString()+"-"+(idNumero2).toString()));
-            }
-            if((document.getElementById((idNumero1).toString()+"-"+(idNumero2 + 1).toString()))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1).toString()+"-"+(idNumero2 + 1).toString()));
-            }
-            if((document.getElementById((idNumero1 + 1).toString()+"-"+(idNumero2).toString()))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1 + 1).toString()+"-"+(idNumero2).toString()));
-            }
-            if((document.getElementById((idNumero1 + 1).toString+"-"+(idNumero2 + 1).toString))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1 + 1).toString()+"-"+(idNumero2 + 1).toString()));
-            }
-            if((document.getElementById((idNumero1 - 1).toString()+"-"+(idNumero2 + 1).toString()))!=null){
-                verificarSubCasillero(document.getElementById((idNumero1 - 1).toString()+"-"+(idNumero2 + 1).toString()));
-            }
-            if(document.getElementById((idNumero1 + 1).toString()+"-"+(idNumero2 - 1).toString())!=null){
-                verificarSubCasillero(document.getElementById((idNumero1 + 1 ).toString()+"-"+(idNumero2 - 1).toString()));
-            }
+            this.style.borderColor=obtenerColor(minas);
+            this.style.background=obtenerColor(minas);
         }else{
             this.setAttribute("value",minas);
+            this.style.borderColor=obtenerColor(minas);
+            this.style.background=obtenerColor(minas);
         }
-        this.disabled=true;
-        
     }
 }
 function verificarSubCasillero(boton){
-    var tablero=document.getElementById("tablero");
-    var botones=tablero.getElementsByTagName("input");
+    boton.disabled=true;
     var id=boton.id;
     var indiceGuion=id.indexOf('-');
-    var idNumero1=id.substring(0,indiceGuion);
-    var idNumero2=id.substring(indiceGuion,(id.length-1));
-    if(boton.value=="-1"){
-        for(var i=0;i<botones.length;i++){
-            botones[i].disabled=true;
-        }
-        alert("Has perdido.");
-    }else if(boton.value=="0"){
+    var idNumero1=id.substring(0,(indiceGuion));
+    var idNumero2=id.substring((indiceGuion+1));
+    if(boton.value=="0"){
         var minas=contarOcultas(boton);
         if(minas==0){
-            var boton1=document.getElementById((idNumero1-1)+"-"+(idNumero2-1));
-            var boton2=document.getElementById((idNumero1)+"-"+(idNumero2-1));
-            var boton3=document.getElementById((idNumero1+1)+"-"+(idNumero2-1));
-            var boton4=document.getElementById((idNumero1-1)+"-"+(idNumero2));
-            var boton5=document.getElementById((idNumero1+1)+"-"+(idNumero2));
-            var boton6=document.getElementById((idNumero1-1)+"-"+(idNumero2+1));
-            var boton7=document.getElementById((idNumero1)+"-"+(idNumero2+1));
-            var boton8=document.getElementById((idNumero1+1)+"-"+(idNumero2+1));
-            verificarSubCasillero(boton1);
-            verificarSubCasillero(boton2);
-            verificarSubCasillero(boton3);
-            verificarSubCasillero(boton4);
-            verificarSubCasillero(boton5);
-            verificarSubCasillero(boton6);
-            verificarSubCasillero(boton7);
-            verificarSubCasillero(boton8);
+            var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+            var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+            var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+            var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
+            var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
+            var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+            var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+            var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+            var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+            for(var i=0;i<botonesAVerificar.length;i++){
+                if(botonesAVerificar[i]!=null){
+                    if(botonesAVerificar[i].disabled==false){
+                        setTimeout(verificarSubCasillero(botonesAVerificar[i]),1000);
+                    }
+                }
+            }
+            boton.style.borderColor=obtenerColor(minas);
+            boton.style.background=obtenerColor(minas);
+        }else{
+            boton.setAttribute("value",minas);
+            boton.style.borderColor=obtenerColor(minas);
+            boton.style.background=obtenerColor(minas);
         }
     }
 }
@@ -222,37 +218,47 @@ function contarOcultas(boton){
     var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
     var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
     var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    if(boton1.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton2.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton3.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton4.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton5.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton6.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton7.value=="-1"){
-        cantidadDeMinas++;
-    }
-    if(boton8.value=="-1"){
-        cantidadDeMinas++;
+    var botones=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+    for(var i=0;i<botones.length;i++){
+        if(botones[i]!=null){
+            if(botones[i].value=="-1"){
+                cantidadDeMinas++;
+            }
+        }
     }
     return cantidadDeMinas;
 }
-/*
-    var id="30-30"
-    var indiceGuion=id.indexOf('-');
-    var idNumero1=id.substring(0,(indiceGuion));
-    var idNumero2=id.substring((indiceGuion+1));
-    var string=((parseInt(idNumero1)+1).toString())+"-"+(idNumero2 + 1);
-    alert(string);
-*/
+function obtenerColor(numeroDeMinas){
+    if(numeroDeMinas==0){
+        return "#AFBDFF";
+    }else if(numeroDeMinas==1){
+        return "#00AD00";
+    }else if(numeroDeMinas==3){
+        return "#D9D900";
+    }else if(numeroDeMinas==4){
+        return "#D99100";
+    }else if(numeroDeMinas==5){
+        return "#D93E00";
+    }else if(numeroDeMinas==6){
+        return "#AE0062";
+    }else if(numeroDeMinas==7){
+        return "#5D0091";
+    }else if(numeroDeMinas==8){
+        return "#531DFF";
+    }else if(numeroDeMinas==2){
+        return "#96CD00";
+    }else if(numeroDeMinas==-1){
+        return "#D90000";
+    }
+}
+function reiniciar(){
+    var tablero=document.getElementById("tablero");
+    var botones=tablero.getElementsByTagName("input");
+    for(var i=0;i<botones.length;i++){
+        botones[i].disabled=false;
+        botones[i].value="0";
+        botones[i].style.borderColor="#337ab7";
+        botones[i].style.background="#337ab7";
+    }
+    colocarMinas(Math.sqrt(botones.length));
+}
