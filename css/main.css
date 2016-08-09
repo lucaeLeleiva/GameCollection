@@ -8,7 +8,8 @@
     width:100%;
 }
 .casilleroTaTeTi{
-    width:30%;
+    width:33.3333333333333333%;
+    display:inline-block;
 }
 .casilleroBuscaMinasFacil{
     width:10%;
@@ -22,7 +23,14 @@
     width:2%;
     display:inline-block;
 }
-#juegotateti .btn{
+.botonTateti{
+    color:#fff;
+    background-color:#337ab7;
+    border-color: #2e6da4;
+    width:100%;
+    border-radius: 3%;
+    
+    
     padding-top: 20%;
     padding-bottom: 20%;
 }
