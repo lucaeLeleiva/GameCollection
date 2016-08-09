@@ -13,8 +13,9 @@
     - Refinar dificultad.
     - Crear cronometro.
 - Modificar Ta-Te-Ti.
+  - Refinar estilo.
+  - Agregar forma de volver al selector de juego.
   - Agregar marcador.
-  - Generar el tablero.
   - Hacer turnos para el juego contra ia y vs.
 - Agregar Sudoku.
 - Agregar Viborita.
