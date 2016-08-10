@@ -3,6 +3,7 @@
 ### Juegos
 - Ta-Te-Ti contra la maquina.
 - Ta-Te-Ti contra una persona en el mismo dispositivo.
+- Buscaminas en tres dificultades estandarizadas.
 
 ### TODO's
 - Agregar Buscaminas.
