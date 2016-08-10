@@ -1,6 +1,20 @@
 window.onload=function(){
     selectorDeTipoDeJuego();
+    document.getElementById("r").onclick=reiniciar;
+    document.getElementById("v").onclick=volver;
 };
+function volver(){
+    numeroDeTurno=0;
+    var juego=document.getElementById("tablerotateti");
+    while(juego.firstChild){
+        juego.removeChild(juego.firstChild);
+    }
+    var selector=document.getElementById("selectorDeTipoDeJuego");
+    while(selector.firstChild){
+        selector.removeChild(selector.firstChild);
+    }
+    selectorDeTipoDeJuego();
+}
 //Variable auxiliar de turno.
 var numeroDeTurno = 0;
 //Se ejecutara cada vez que se haga click en un boton.(Marca turnos y hace jugar a la maquina.)
@@ -193,11 +207,10 @@ function ia(){
     botonAElegir.disabled=true;
 }
 function selectorDeTipoDeJuego(){
+    document.getElementById("v").style.display="none";
+    document.getElementById("r").style.display="none";
     var tablero = document.getElementById("tablerotateti");
     var botones = tablero.getElementsByTagName("input");
-    var botonDeReinicio=document.getElementById("r");
-    botonDeReinicio.onclick=reiniciar;
-    botonDeReinicio.style.display="none";
     var fila1=document.createElement("div");
     var fila2=document.createElement("div");
     fila1.setAttribute("class","row");
@@ -221,6 +234,7 @@ function selectorDeTipoDeJuego(){
 }
 function dibujarTablero(){
     document.getElementById("r").style.display="initial";
+    document.getElementById("v").style.display="initial";
     document.getElementById("botonIA").style.display="none";
     document.getElementById("botonVS").style.display="none";
     var tablero=document.getElementById("tablerotateti");

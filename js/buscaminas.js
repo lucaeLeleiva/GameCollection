@@ -1,10 +1,24 @@
 window.onload=function(){
     dificultad();
     document.getElementById("r").onclick=reiniciar;
+    document.getElementById("v").onclick=volver;
 };
+var casillerosSinMinas;
+function volver(){
+    var juego=document.getElementById("tablero");
+    while(juego.firstChild){
+        juego.removeChild(juego.firstChild);
+    }
+    var selector=document.getElementById("dificultades");
+    while(selector.firstChild){
+        selector.removeChild(selector.firstChild);
+    }
+    dificultad();
+}
 function dificultad(){
     document.getElementById("dificultades").style.display="initial";
     document.getElementById("r").style.display="none";
+    document.getElementById("v").style.display="none";
     document.getElementById("tablero").style.display="none";
     var fila1=document.createElement("div");
     var fila2=document.createElement("div");
@@ -40,6 +54,7 @@ function dificultad(){
 function dibujarTableroFacil(){
     document.getElementById("dificultades").style.display="none";
     document.getElementById("r").style.display="initial";
+    document.getElementById("v").style.display="initial";
     document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     var tamanio=10;
@@ -65,6 +80,7 @@ function dibujarTableroFacil(){
 function dibujarTableroMedio(){
     document.getElementById("dificultades").style.display="none";
     document.getElementById("r").style.display="initial";
+    document.getElementById("v").style.display="initial";
     document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     var tamanio=30;
@@ -88,9 +104,7 @@ function dibujarTableroMedio(){
     colocarMinas(tamanio);
 }
 function dibujarTableroDificil(){
-    document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="initial";
-    document.getElementById("tablero").style.display="initial";
+    
     var tablero=document.getElementById("tablero");
     var tamanio=50;
     for(var i=0;i<tamanio;i++){
@@ -114,7 +128,8 @@ function dibujarTableroDificil(){
 }
 function colocarMinas(cantidadDeMinas){
     var cantidadDeMinasOriginal=cantidadDeMinas;
-    cantidadDeMinas*=2;
+    cantidadDeMinas=(Math.floor(Math.pow((cantidadDeMinas/6),3)));
+    casillerosSinMinas=(cantidadDeMinasOriginal*cantidadDeMinasOriginal)-cantidadDeMinas;
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
     for(;cantidadDeMinas>0;cantidadDeMinas--){
@@ -131,6 +146,15 @@ function colocarMinas(cantidadDeMinas){
 }
 function verificar(){
     this.disabled=true;
+    casillerosSinMinas--;
+    var tablero=document.getElementById("tablero");
+    var botones=tablero.getElementsByTagName("input");
+    if(casillerosSinMinas==0){
+        for(var i=0;i<botones.length;i++){
+            botones[i].disabled=true;
+        }
+        alert("Has Ganado!");
+    }
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
     var id=this.id;
@@ -158,7 +182,9 @@ function verificar(){
             var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
             for(var i=0;i<botonesAVerificar.length;i++){
                 if(botonesAVerificar[i]!=null){
-                    verificarSubCasillero(botonesAVerificar[i]);
+                    if(botonesAVerificar[i].disabled==false){
+                        verificarSubCasillero(botonesAVerificar[i]);
+                    }
                 }
             }
             this.style.borderColor=obtenerColor(minas);
@@ -168,40 +194,48 @@ function verificar(){
             this.style.borderColor=obtenerColor(minas);
             this.style.background=obtenerColor(minas);
         }
+        
     }
 }
 function verificarSubCasillero(boton){
     boton.disabled=true;
+    casillerosSinMinas--;
+    var tablero=document.getElementById("tablero");
+    var botones=tablero.getElementsByTagName("input");
+    if(casillerosSinMinas==0){
+        for(var i=0;i<botones.length;i++){
+            botones[i].disabled=true;
+        }
+        alert("Has Ganado!");
+    }
     var id=boton.id;
     var indiceGuion=id.indexOf('-');
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
-    if(boton.value=="0"){
-        var minas=contarOcultas(boton);
-        if(minas==0){
-            var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-            var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-            var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-            var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
-            var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
-            var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-            var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-            var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-            var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
-            for(var i=0;i<botonesAVerificar.length;i++){
-                if(botonesAVerificar[i]!=null){
-                    if(botonesAVerificar[i].disabled==false){
-                        setTimeout(verificarSubCasillero(botonesAVerificar[i]),1000);
-                    }
+    var minas=contarOcultas(boton);
+    if(minas==0){
+        var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+        var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+        var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+        var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
+        var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
+        var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+        var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+        var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+        var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+        for(var i=0;i<botonesAVerificar.length;i++){
+            if(botonesAVerificar[i]!=null){
+                if(botonesAVerificar[i].disabled==false){
+                    verificarSubCasillero(botonesAVerificar[i]);
                 }
             }
-            boton.style.borderColor=obtenerColor(minas);
-            boton.style.background=obtenerColor(minas);
-        }else{
-            boton.setAttribute("value",minas);
-            boton.style.borderColor=obtenerColor(minas);
-            boton.style.background=obtenerColor(minas);
         }
+        boton.style.borderColor=obtenerColor(minas);
+        boton.style.background=obtenerColor(minas);
+    }else{
+        boton.setAttribute("value",minas);
+        boton.style.borderColor=obtenerColor(minas);
+        boton.style.background=obtenerColor(minas);
     }
 }
 function contarOcultas(boton){
