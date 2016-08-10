@@ -7,14 +7,10 @@
 ### TODO's
 - Agregar Buscaminas.
   - Refinar estilo.
-  - Agregar forma de volver al selector de dificultad.
   - Agregar mas logica del juego.
-    - Condiciones de victoria.
-    - Refinar dificultad.
     - Crear cronometro.
 - Modificar Ta-Te-Ti.
   - Refinar estilo.
-  - Agregar forma de volver al selector de juego.
   - Agregar marcador.
   - Hacer turnos para el juego contra ia y vs.
 - Agregar Sudoku.
