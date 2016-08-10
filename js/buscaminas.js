@@ -1,11 +1,24 @@
 window.onload=function(){
     dificultad();
     document.getElementById("r").onclick=reiniciar;
+    document.getElementById("v").onclick=volver;
 };
 var casillerosSinMinas;
+function volver(){
+    var juego=document.getElementById("tablero");
+    while(juego.firstChild){
+        juego.removeChild(juego.firstChild);
+    }
+    var selector=document.getElementById("dificultades");
+    while(selector.firstChild){
+        selector.removeChild(selector.firstChild);
+    }
+    dificultad();
+}
 function dificultad(){
     document.getElementById("dificultades").style.display="initial";
     document.getElementById("r").style.display="none";
+    document.getElementById("v").style.display="none";
     document.getElementById("tablero").style.display="none";
     var fila1=document.createElement("div");
     var fila2=document.createElement("div");
@@ -41,6 +54,7 @@ function dificultad(){
 function dibujarTableroFacil(){
     document.getElementById("dificultades").style.display="none";
     document.getElementById("r").style.display="initial";
+    document.getElementById("v").style.display="initial";
     document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     var tamanio=10;
@@ -66,6 +80,7 @@ function dibujarTableroFacil(){
 function dibujarTableroMedio(){
     document.getElementById("dificultades").style.display="none";
     document.getElementById("r").style.display="initial";
+    document.getElementById("v").style.display="initial";
     document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     var tamanio=30;
@@ -89,9 +104,7 @@ function dibujarTableroMedio(){
     colocarMinas(tamanio);
 }
 function dibujarTableroDificil(){
-    document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="initial";
-    document.getElementById("tablero").style.display="initial";
+    
     var tablero=document.getElementById("tablero");
     var tamanio=50;
     for(var i=0;i<tamanio;i++){
