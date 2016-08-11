@@ -8,8 +8,6 @@
 ### TODO's
 - Agregar Buscaminas.
   - Refinar estilo.
-  - Agregar mas logica del juego.
-    - Crear cronometro.
 - Modificar Ta-Te-Ti.
   - Refinar estilo.
   - Agregar marcador.
