@@ -1,20 +1,15 @@
+//La app inicia al cargarse la pagina.
 window.onload=function(){
     dificultad();
     document.getElementById("r").onclick=reiniciar;
     document.getElementById("v").onclick=volver;
 };
+//Variable auxiliar que contiene la fecha de inicio de juego y una variable que contiene el temporizador
+var temporizador;
+var tiempoInicio;
+//Variable auxiliar que se asigna cuando se hayan puesto las minas en el tablero.
 var casillerosSinMinas;
-function volver(){
-    var juego=document.getElementById("tablero");
-    while(juego.firstChild){
-        juego.removeChild(juego.firstChild);
-    }
-    var selector=document.getElementById("dificultades");
-    while(selector.firstChild){
-        selector.removeChild(selector.firstChild);
-    }
-    dificultad();
-}
+//Crea y muestra el selector de dificultad.
 function dificultad(){
     document.getElementById("dificultades").style.display="initial";
     document.getElementById("r").style.display="none";
@@ -51,6 +46,7 @@ function dificultad(){
     document.getElementById("dificultades").appendChild(fila2);
     document.getElementById("dificultades").appendChild(fila3);
 }
+//Segun la eleccion del jugador crean un tablero acorde.
 function dibujarTableroFacil(){
     document.getElementById("dificultades").style.display="none";
     document.getElementById("r").style.display="initial";
@@ -104,7 +100,10 @@ function dibujarTableroMedio(){
     colocarMinas(tamanio);
 }
 function dibujarTableroDificil(){
-    
+    document.getElementById("dificultades").style.display="none";
+    document.getElementById("r").style.display="initial";
+    document.getElementById("v").style.display="initial";
+    document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
     var tamanio=50;
     for(var i=0;i<tamanio;i++){
@@ -126,6 +125,8 @@ function dibujarTableroDificil(){
     }
     colocarMinas(tamanio);
 }
+/*Luego de creado el tablero se ejecuta la siguiente funcion que reparte minas por el tablero
+de forma aleatoria y inicializa la variable casilleros sin minas*/
 function colocarMinas(cantidadDeMinas){
     var cantidadDeMinasOriginal=cantidadDeMinas;
     cantidadDeMinas=(Math.floor(Math.pow((cantidadDeMinas/6),3)));
@@ -144,31 +145,30 @@ function colocarMinas(cantidadDeMinas){
         }
     }
 }
+//Se ejecuta la siguiente funcion cada vez que se hace click en un casillero
+//Verifica que el casillero no sea una mina y si es lo muestra el mensaje adecuado y deshabilita los botones
+//Si no es una mina llama un metodo para verificar cuantas minas hay a su alrededor y si es 0 llama a otro metodo
+//El cual verifica los casilleros alrededor.
 function verificar(){
-    this.disabled=true;
-    casillerosSinMinas--;
-    var tablero=document.getElementById("tablero");
-    var botones=tablero.getElementsByTagName("input");
-    if(casillerosSinMinas==0){
-        for(var i=0;i<botones.length;i++){
-            botones[i].disabled=true;
-        }
-        alert("Has Ganado!");
+    if(tiempoInicio==null){
+        cronometroIniciar();    
     }
-    var tablero=document.getElementById("tablero");
-    var botones=tablero.getElementsByTagName("input");
+    this.disabled=true;
     var id=this.id;
     var indiceGuion=id.indexOf('-');
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
     if(this.value=="-1"){
-        for(var i=0;i<botones.length;i++){
-            botones[i].disabled=true;
-        }
+        terminarJuego();
         this.style.borderColor=obtenerColor(-1);
         this.style.background=obtenerColor(-1);
         alert("Has perdido.");
     }else if(this.value=="0"){
+        casillerosSinMinas--;
+        if(casillerosSinMinas==0){
+            terminarJuego();
+            alert("Has Ganado!");
+        }
         var minas=contarOcultas(this);
         if(minas==0){
             var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
@@ -191,21 +191,21 @@ function verificar(){
             this.style.background=obtenerColor(minas);
         }else{
             this.setAttribute("value",minas);
+            this.style.color="white";
             this.style.borderColor=obtenerColor(minas);
             this.style.background=obtenerColor(minas);
         }
         
     }
 }
+//Verifica los casilleros a los cuales no se le hizo click.
 function verificarSubCasillero(boton){
     boton.disabled=true;
     casillerosSinMinas--;
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
     if(casillerosSinMinas==0){
-        for(var i=0;i<botones.length;i++){
-            botones[i].disabled=true;
-        }
+        terminarJuego();
         alert("Has Ganado!");
     }
     var id=boton.id;
@@ -234,10 +234,12 @@ function verificarSubCasillero(boton){
         boton.style.background=obtenerColor(minas);
     }else{
         boton.setAttribute("value",minas);
+        boton.style.color="white";
         boton.style.borderColor=obtenerColor(minas);
         boton.style.background=obtenerColor(minas);
     }
 }
+//Cuenta la cantidad de minas alrededor de un boton dado y devuelve el numero.
 function contarOcultas(boton){
     var id=boton.id;
     var indiceGuion=id.indexOf('-');
@@ -262,6 +264,7 @@ function contarOcultas(boton){
     }
     return cantidadDeMinas;
 }
+//Devuelve un color en hexagecimal segun el numero pasado.
 function obtenerColor(numeroDeMinas){
     if(numeroDeMinas==0){
         return "#AFBDFF";
@@ -285,14 +288,59 @@ function obtenerColor(numeroDeMinas){
         return "#D90000";
     }
 }
+//Borra el tablero y selector de dificultad y luego llama a la funcion que crea el tablero de dificultad.
+function volver(){
+    var juego=document.getElementById("tablero");
+    while(juego.firstChild){
+        juego.removeChild(juego.firstChild);
+    }
+    var selector=document.getElementById("dificultades");
+    while(selector.firstChild){
+        selector.removeChild(selector.firstChild);
+    }
+    document.getElementById("cronometroDiv").innerHTML=0;
+    tiempoInicio=null;
+    clearTimeout(temporizador);
+    dificultad();
+}
+//Reinicia el juego vaciando los casilleros de minas, rehabilitando los botones y llamando a la funcion colocar minas.
 function reiniciar(){
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
     for(var i=0;i<botones.length;i++){
         botones[i].disabled=false;
         botones[i].value="0";
+        botones[i].style.color="transparent";
         botones[i].style.borderColor="#337ab7";
         botones[i].style.background="#337ab7";
     }
     colocarMinas(Math.sqrt(botones.length));
+    document.getElementById("cronometroDiv").innerHTML=0;
+    tiempoInicio=null;
+    clearTimeout(temporizador);
+}
+//Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
+function cronometroIniciar(){
+    tiempoInicio=new Date();
+    cronometroContinuar();
+}
+//Calcula los segundos entre que es ejecutada y se inicio el cronometro y lo imprime en el div.
+function cronometroContinuar(){
+    var tiempoActual=new Date();
+    var tiempo= tiempoActual - tiempoInicio;
+	tiempo = new Date(tiempo);
+	var segundos = tiempo.getSeconds();
+	var minutos=tiempo.getMinutes();
+	segundos+=minutos*60;
+    document.getElementById("cronometroDiv").innerHTML=segundos;
+    temporizador=setTimeout("cronometroContinuar()",100);
+}
+//Termina el juego deshabilitando los casilleros y parando el cronometro.
+function terminarJuego(){
+    var tablero=document.getElementById("tablero");
+    var botones=tablero.getElementsByTagName("input");
+    for(var i=0;i<botones.length;i++){
+        botones[i].disabled=true;
+    }
+    clearTimeout(temporizador);
 }
