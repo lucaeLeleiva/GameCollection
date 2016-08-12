@@ -4,7 +4,7 @@ window.onload=function(){
     document.getElementById("r").onclick=reiniciar;
     document.getElementById("v").onclick=volver;
 };
-//Variable auxiliar que contiene la fecha de inicio de juego.
+//Variable auxiliar que contiene la fecha de inicio de juego y una variable que contiene el temporizador
 var temporizador;
 var tiempoInicio;
 //Variable auxiliar que se asigna cuando se hayan puesto las minas en el tablero.
@@ -191,6 +191,7 @@ function verificar(){
             this.style.background=obtenerColor(minas);
         }else{
             this.setAttribute("value",minas);
+            this.style.color="white";
             this.style.borderColor=obtenerColor(minas);
             this.style.background=obtenerColor(minas);
         }
@@ -233,6 +234,7 @@ function verificarSubCasillero(boton){
         boton.style.background=obtenerColor(minas);
     }else{
         boton.setAttribute("value",minas);
+        boton.style.color="white";
         boton.style.borderColor=obtenerColor(minas);
         boton.style.background=obtenerColor(minas);
     }
@@ -308,6 +310,7 @@ function reiniciar(){
     for(var i=0;i<botones.length;i++){
         botones[i].disabled=false;
         botones[i].value="0";
+        botones[i].style.color="transparent";
         botones[i].style.borderColor="#337ab7";
         botones[i].style.background="#337ab7";
     }
@@ -316,10 +319,12 @@ function reiniciar(){
     tiempoInicio=null;
     clearTimeout(temporizador);
 }
+//Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
 function cronometroIniciar(){
     tiempoInicio=new Date();
     cronometroContinuar();
 }
+//Calcula los segundos entre que es ejecutada y se inicio el cronometro y lo imprime en el div.
 function cronometroContinuar(){
     var tiempoActual=new Date();
     var tiempo= tiempoActual - tiempoInicio;
@@ -330,6 +335,7 @@ function cronometroContinuar(){
     document.getElementById("cronometroDiv").innerHTML=segundos;
     temporizador=setTimeout("cronometroContinuar()",100);
 }
+//Termina el juego deshabilitando los casilleros y parando el cronometro.
 function terminarJuego(){
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
