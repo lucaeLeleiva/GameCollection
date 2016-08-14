@@ -68,31 +68,41 @@ function turnoVs(){
     var jugador;
     if(numeroDeTurno%2==0){
         jugador="X";
-    }else{
+        this.value=jugador;
+        numeroDeTurno++;
+        this.disabled=true;
+        if(verificarGanador()){
+            alert("Gano el jugador X");
+        }
+    }else if(numeroDeTurno%2!=0){
         jugador="O";
-    }
-    this.value=jugador;
-    numeroDeTurno++;
-    this.disabled=true;
-    if(verificarGanador()){
-        alert("Gano el jugador: "+jugador);
-    }else if(numeroDeTurno==9){
+        this.value=jugador;
+        numeroDeTurno++;
+        this.disabled=true;
+        if(verificarGanador()){
+            alert("Gano el jugador O");
+        }
+    }else if(todosDeshabilitados()){
         alert("Se ha empatado");
     }
 }
 function turnoIa(){
     var jugador="X";
-    this.value=jugador;
-    numeroDeTurno++;
-    this.disabled=true;
-    if(verificarGanador()){
-        alert("Gano el jugador.");
-    }else if(numeroDeTurno<9){
+    if(numeroDeTurno%2==0){
+        this.value=jugador;
+        numeroDeTurno++;
+        this.disabled=true;
+        if(verificarGanador()){
+            alert("Gano el jugador.");
+        }
+    }
+    if(numeroDeTurno%2!=0 && !todosDeshabilitados()){
         ia();
         if(verificarGanador()){
             alert("Gano la maquina.");
         }
-    }else{
+    }
+    if(!verificarGanador()&&todosDeshabilitados()){
         alert("Se ha empatado");
     }
 }
@@ -260,9 +270,26 @@ function volver(){
 function reiniciar(){
     var tablero = document.getElementById("tablerotateti");
     var botones = tablero.getElementsByTagName("input");
-    numeroDeTurno=0;
     for (var i = 0; i<botones.length; i++) {
         botones[i].disabled=false;
         botones[i].value=" ";
     }
+    if(botones[0].onclick==turnoIa&&numeroDeTurno%2!=0){
+        ia();
+        numeroDeTurno=0;
+    }
+}
+//Comprueba si todos los botones estan deshabilitados y de ser asi devuelve true.
+function todosDeshabilitados(){
+    var deshabilitado=true;
+    var tablero = document.getElementById("tablerotateti");
+    var botones = tablero.getElementsByTagName("input");
+    var numeroDeBoton=0;
+    while(numeroDeBoton<botones.length&&deshabilitado){
+        if(botones[numeroDeBoton].disabled==false){
+            deshabilitado=false;
+        }
+        numeroDeBoton++;
+    }
+    return deshabilitado;
 }
