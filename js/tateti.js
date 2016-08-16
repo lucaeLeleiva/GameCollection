@@ -7,8 +7,11 @@ window.onload=function(){
 };
 //Variable auxiliar de turno.
 var numeroDeTurno = 0;
+var ganadosJugador1=0;
+var ganadosJugador2=0;
 //Oculta los botones de volver al selector y de reinicio y crea los botones para elegir el modo de juego.
 function selectorDeTipoDeJuego(){
+    document.getElementById('marcador').style.display="none";
     document.getElementById("v").style.display="none";
     document.getElementById("r").style.display="none";
     var tablero = document.getElementById("tablerotateti");
@@ -36,6 +39,7 @@ function selectorDeTipoDeJuego(){
 }
 //Oculta el selector de dificultad y crea los botones que conforman el tablero, tambien revela el boton de inicio y el de volver al selector.
 function dibujarTablero(){
+    document.getElementById("marcador").style.display="initial";
     document.getElementById("r").style.display="initial";
     document.getElementById("v").style.display="initial";
     document.getElementById("botonIA").style.display="none";
@@ -72,6 +76,8 @@ function turnoVs(){
         numeroDeTurno++;
         this.disabled=true;
         if(verificarGanador()){
+            ganadosJugador1++;
+            actualizarMarcador();
             alert("Gano el jugador X");
         }
     }else if(numeroDeTurno%2!=0){
@@ -80,6 +86,8 @@ function turnoVs(){
         numeroDeTurno++;
         this.disabled=true;
         if(verificarGanador()){
+            ganadosJugador2++;
+            actualizarMarcador();
             alert("Gano el jugador O");
         }
     }else if(todosDeshabilitados()){
@@ -93,12 +101,16 @@ function turnoIa(){
         numeroDeTurno++;
         this.disabled=true;
         if(verificarGanador()){
+            ganadosJugador1++;
+            actualizarMarcador();
             alert("Gano el jugador.");
         }
     }
     if(numeroDeTurno%2!=0 && !todosDeshabilitados()){
         ia();
         if(verificarGanador()){
+            ganadosJugador2++;
+            actualizarMarcador();
             alert("Gano la maquina.");
         }
     }
@@ -255,6 +267,9 @@ function verificarGanador(){
 }
 //Borra el tablero y el menu de selector, y llama al creador del menu otra vez.
 function volver(){
+    ganadosJugador1=0;
+    ganadosJugador2=0;
+    actualizarMarcador();
     numeroDeTurno=0;
     var juego=document.getElementById("tablerotateti");
     while(juego.firstChild){
@@ -292,4 +307,9 @@ function todosDeshabilitados(){
         numeroDeBoton++;
     }
     return deshabilitado;
+}
+//Actualiza el contenido del marcador a los valores actuales de ganadosJugador1/2
+function actualizarMarcador(){
+    var marcador=document.getElementById("marcador");
+    marcador.innerHTML=ganadosJugador1+"-"+ganadosJugador2;
 }

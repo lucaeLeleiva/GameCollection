@@ -12,8 +12,6 @@
   - Deshabilitar y habilitar al hacer click derecho.
 - Modificar Ta-Te-Ti.
   - Refinar estilo.
-  - Agregar marcador.
-  - Hacer turnos para el juego contra ia y vs.
 - Agregar Sudoku.
 - Agregar Viborita.
 - Agregar juego de texto.
