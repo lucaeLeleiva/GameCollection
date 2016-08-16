@@ -70,7 +70,7 @@ function dibujarTablero(){
 //Se ejecutara cada vez que se haga click en un boton(Marca turnos y hace jugar a la maquina si fuera el caso).
 function turnoVs(){
     var jugador;
-    if(numeroDeTurno%2==0){
+    if(numeroDeTurno%2===0){
         jugador="X";
         this.value=jugador;
         numeroDeTurno++;
@@ -80,7 +80,7 @@ function turnoVs(){
             actualizarMarcador();
             alert("Gano el jugador X");
         }
-    }else if(numeroDeTurno%2!=0){
+    }else if(numeroDeTurno%2!==0){
         jugador="O";
         this.value=jugador;
         numeroDeTurno++;
@@ -96,7 +96,7 @@ function turnoVs(){
 }
 function turnoIa(){
     var jugador="X";
-    if(numeroDeTurno%2==0){
+    if(numeroDeTurno%2===0){
         this.value=jugador;
         numeroDeTurno++;
         this.disabled=true;
@@ -106,7 +106,7 @@ function turnoIa(){
             alert("Gano el jugador.");
         }
     }
-    if(numeroDeTurno%2!=0 && !todosDeshabilitados()){
+    if(numeroDeTurno%2!==0 && !todosDeshabilitados()){
         ia();
         if(verificarGanador()){
             ganadosJugador2++;
