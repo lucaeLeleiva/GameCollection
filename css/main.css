@@ -11,16 +11,7 @@
     width:33.3333333333333333%;
     display:inline-block;
 }
-.casilleroBuscaMinasFacil{
-    width:10%;
-    display:inline-block;
-}
-.casilleroBuscaMinasMedio{
-    width:3.333333333%;
-    display:inline-block;
-}
-.casilleroBuscaMinasDificil{
-    width:2%;
+.casilleroBuscaMinas{
     display:inline-block;
 }
 .botonTateti{
