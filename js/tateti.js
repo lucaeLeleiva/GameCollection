@@ -2,6 +2,11 @@
 var numeroDeTurno = 0;
 var ganadosJugador1=0;
 var ganadosJugador2=0;
+//Actualiza el contenido del marcador a los valores actuales de ganadosJugador1/2
+function actualizarMarcador(){
+    var marcador=document.getElementById("marcador");
+    marcador.innerHTML=ganadosJugador1+"-"+ganadosJugador2;
+}
 //Elije un boton, lo desabilita y le asigna O para la maquina.
 //Prioriza en orden, ganar, no dejar ganar, aleatorio.
 function ia(){
@@ -112,7 +117,7 @@ function ia(){
         } 
     }
     //Si no se cumple ninguno de los otros casos elige un boton random.
-    while(botonAElegir==null||botonAElegir.value=="X"||botonAElegir.value=="O"){
+    while(botonAElegir==null||botonAElegir.value==="X"||botonAElegir.value==="O"){
         var numeroDeBoton=Math.floor(Math.random()*(9 - 0));
         botonAElegir=botones[numeroDeBoton];
     }
@@ -125,29 +130,43 @@ function verificarGanador(){
     var tablero = document.getElementById("tablerotateti");
     var botones = tablero.getElementsByTagName("input");
     var gano=false;
-    if(botones[0].value==botones[1].value&&botones[1].value==botones[2].value&&botones[0].value!=" "){
+    if(botones[0].value==botones[1].value&&botones[1].value==botones[2].value&&botones[0].value!==" "){
         gano=true;
-    }else if(botones[0].value==botones[3].value&&botones[3].value==botones[6].value&&botones[0].value!=" "){
+    }else if(botones[0].value==botones[3].value&&botones[3].value==botones[6].value&&botones[0].value!==" "){
         gano=true;
-    }else if(botones[0].value==botones[4].value&&botones[4].value==botones[8].value&&botones[0].value!=" "){
+    }else if(botones[0].value==botones[4].value&&botones[4].value==botones[8].value&&botones[0].value!==" "){
         gano=true;
-    }else if(botones[3].value==botones[4].value&&botones[4].value==botones[5].value&&botones[3].value!=" "){
+    }else if(botones[3].value==botones[4].value&&botones[4].value==botones[5].value&&botones[3].value!==" "){
         gano=true;
-    }else if(botones[6].value==botones[7].value&&botones[7].value==botones[8].value&&botones[6].value!=" "){
+    }else if(botones[6].value==botones[7].value&&botones[7].value==botones[8].value&&botones[6].value!==" "){
         gano=true;
-    }else if(botones[2].value==botones[5].value&&botones[5].value==botones[8].value&&botones[2].value!=" "){
+    }else if(botones[2].value==botones[5].value&&botones[5].value==botones[8].value&&botones[2].value!==" "){
         gano=true;
-    }else if(botones[2].value==botones[4].value&&botones[4].value==botones[6].value&&botones[2].value!=" "){
+    }else if(botones[2].value==botones[4].value&&botones[4].value==botones[6].value&&botones[2].value!==" "){
         gano=true;
-    }else if(botones[1].value==botones[4].value&&botones[4].value==botones[7].value&&botones[1].value!=" "){
+    }else if(botones[1].value==botones[4].value&&botones[4].value==botones[7].value&&botones[1].value!==" "){
         gano=true;
     }
-    if(gano==true){
+    if(gano===true){
         for (var i =0; i<botones.length;i++ ) {
             botones[i].disabled=true;
         }
     }
     return gano;
+}
+//Comprueba si todos los botones estan deshabilitados y de ser asi devuelve true.
+function todosDeshabilitados(){
+    var deshabilitado=true;
+    var tablero = document.getElementById("tablerotateti");
+    var botones = tablero.getElementsByTagName("input");
+    var numeroDeBoton=0;
+    while(numeroDeBoton<botones.length&&deshabilitado){
+        if(botones[numeroDeBoton].disabled==false){
+            deshabilitado=false;
+        }
+        numeroDeBoton++;
+    }
+    return deshabilitado;
 }
 //Borra el tablero y el menu de selector, y llama al creador del menu otra vez.
 function volver(){
@@ -165,42 +184,10 @@ function volver(){
     }
     selectorDeTipoDeJuego();
 }
-//Reinicia el juego, habilita los botones y los deja vacios.
-function reiniciar(){
-    var tablero = document.getElementById("tablerotateti");
-    var botones = tablero.getElementsByTagName("input");
-    for (var i = 0; i<botones.length; i++) {
-        botones[i].disabled=false;
-        botones[i].value=" ";
-    }
-    if(botones[0].onclick==turnoIa&&numeroDeTurno%2!=0){
-        ia();
-        numeroDeTurno=0;
-    }
-}
-//Comprueba si todos los botones estan deshabilitados y de ser asi devuelve true.
-function todosDeshabilitados(){
-    var deshabilitado=true;
-    var tablero = document.getElementById("tablerotateti");
-    var botones = tablero.getElementsByTagName("input");
-    var numeroDeBoton=0;
-    while(numeroDeBoton<botones.length&&deshabilitado){
-        if(botones[numeroDeBoton].disabled==false){
-            deshabilitado=false;
-        }
-        numeroDeBoton++;
-    }
-    return deshabilitado;
-}
-//Actualiza el contenido del marcador a los valores actuales de ganadosJugador1/2
-function actualizarMarcador(){
-    var marcador=document.getElementById("marcador");
-    marcador.innerHTML=ganadosJugador1+"-"+ganadosJugador2;
-}
 //Se ejecutara cada vez que se haga click en un boton(Marca turnos y hace jugar a la maquina si fuera el caso).
 function turnoVs(){
     var jugador;
-    if(numeroDeTurno%2==0){
+    if(numeroDeTurno%2===0){
         jugador="X";
         this.value=jugador;
         numeroDeTurno++;
@@ -248,6 +235,19 @@ function turnoIa(){
         alert("Se ha empatado");
     }
 }
+//Reinicia el juego, habilita los botones y los deja vacios.
+function reiniciar(){
+    var tablero = document.getElementById("tablerotateti");
+    var botones = tablero.getElementsByTagName("input");
+    for (var i = 0; i<botones.length; i++) {
+        botones[i].disabled=false;
+        botones[i].value=" ";
+    }
+    if(botones[0].onclick==turnoIa&&numeroDeTurno%2!==0){
+        ia();
+        numeroDeTurno=0;
+    }
+}
 //Oculta el selector de dificultad y crea los botones que conforman el tablero, tambien revela el boton de inicio y el de volver al selector.
 function dibujarTablero(){
     document.getElementById("marcador").style.display="initial";
@@ -280,7 +280,7 @@ function dibujarTablero(){
 }
 //Oculta los botones de volver al selector y de reinicio y crea los botones para elegir el modo de juego.
 function selectorDeTipoDeJuego(){
-    document.getElementById('marcador').style.display="none";
+    document.getElementById("marcador").style.display="none";
     document.getElementById("v").style.display="none";
     document.getElementById("r").style.display="none";
     var fila1=document.createElement("div");

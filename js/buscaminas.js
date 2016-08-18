@@ -107,12 +107,12 @@ function verificar(){
     var indiceGuion=id.indexOf("-");
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
-    if(this.value=="-1"){
+    if(this.value==="-1"){
         terminarJuego();
         this.style.borderColor=obtenerColor(-1);
         this.style.background=obtenerColor(-1);
         alert("Has perdido.");
-    }else if(this.value=="0"){
+    }else if(this.value==="0"){
         casillerosSinMinas--;
         if(casillerosSinMinas===0){
             terminarJuego();
@@ -263,7 +263,7 @@ function contarOcultas(boton){
     var botones=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
     for(var i=0;i<botones.length;i++){
         if(botones[i]!=null){
-            if(botones[i].value=="-1"){
+            if(botones[i].value==="-1"){
                 cantidadDeMinas++;
             }
         }
