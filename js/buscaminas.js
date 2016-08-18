@@ -1,3 +1,54 @@
+//Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
+function cronometroIniciar(){
+    tiempoInicio=new Date();
+    cronometroContinuar();
+}
+//Calcula los segundos entre que es ejecutada y se inicio el cronometro y lo imprime en el div.
+function cronometroContinuar(){
+    var tiempoActual=new Date();
+    var tiempo= tiempoActual - tiempoInicio;
+	tiempo = new Date(tiempo);
+	var segundos = tiempo.getSeconds();
+	var minutos=tiempo.getMinutes();
+	segundos+=minutos*60;
+    document.getElementById("cronometroDiv").innerHTML=segundos;
+    temporizador=setTimeout("cronometroContinuar()",100);
+}
+//Termina el juego deshabilitando los casilleros y parando el cronometro.
+function terminarJuego(){
+    var tablero=document.getElementById("tablero");
+    var botones=tablero.getElementsByTagName("input");
+    for(var i=0;i<botones.length;i++){
+        botones[i].disabled=true;
+    }
+    clearTimeout(temporizador);
+}
+//Devuelve un color en hexagecimal segun el numero pasado.
+function obtenerColor(numeroDeMinas){
+    var color="white";
+    if(numeroDeMinas===0){
+        color= "#AFBDFF";
+    }else if(numeroDeMinas===1){
+        color ="#00AD00";
+    }else if(numeroDeMinas===3){
+        color ="#D9D900";
+    }else if(numeroDeMinas===4){
+        color ="#D99100";
+    }else if(numeroDeMinas===5){
+        color ="#D93E00";
+    }else if(numeroDeMinas===6){
+        color ="#AE0062";
+    }else if(numeroDeMinas===7){
+        color ="#5D0091";
+    }else if(numeroDeMinas===8){
+        color ="#531DFF";
+    }else if(numeroDeMinas===2){
+        color ="#96CD00";
+    }else if(numeroDeMinas===-1){
+        color ="#D90000";
+    }
+    return color;
+}
 //La app inicia al cargarse la pagina.
 window.onload=function(){
     dificultad();
@@ -155,7 +206,7 @@ function verificar(){
     }
     this.disabled=true;
     var id=this.id;
-    var indiceGuion=id.indexOf('-');
+    var indiceGuion=id.indexOf("-");
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
     if(this.value=="-1"){
@@ -165,12 +216,12 @@ function verificar(){
         alert("Has perdido.");
     }else if(this.value=="0"){
         casillerosSinMinas--;
-        if(casillerosSinMinas==0){
+        if(casillerosSinMinas===0){
             terminarJuego();
             alert("Has Ganado!");
         }
         var minas=contarOcultas(this);
-        if(minas==0){
+        if(minas===0){
             var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
             var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
             var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
@@ -182,7 +233,7 @@ function verificar(){
             var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
             for(var i=0;i<botonesAVerificar.length;i++){
                 if(botonesAVerificar[i]!=null){
-                    if(botonesAVerificar[i].disabled==false){
+                    if(botonesAVerificar[i].disabled===false){
                         verificarSubCasillero(botonesAVerificar[i]);
                     }
                 }
@@ -204,7 +255,7 @@ function verificarSubCasillero(boton){
     casillerosSinMinas--;
     var tablero=document.getElementById("tablero");
     var botones=tablero.getElementsByTagName("input");
-    if(casillerosSinMinas==0){
+    if(casillerosSinMinas===0){
         terminarJuego();
         alert("Has Ganado!");
     }
@@ -213,7 +264,7 @@ function verificarSubCasillero(boton){
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
     var minas=contarOcultas(boton);
-    if(minas==0){
+    if(minas===0){
         var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
         var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
         var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
@@ -225,7 +276,7 @@ function verificarSubCasillero(boton){
         var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
         for(var i=0;i<botonesAVerificar.length;i++){
             if(botonesAVerificar[i]!=null){
-                if(botonesAVerificar[i].disabled==false){
+                if(botonesAVerificar[i].disabled===false){
                     verificarSubCasillero(botonesAVerificar[i]);
                 }
             }
@@ -264,30 +315,6 @@ function contarOcultas(boton){
     }
     return cantidadDeMinas;
 }
-//Devuelve un color en hexagecimal segun el numero pasado.
-function obtenerColor(numeroDeMinas){
-    if(numeroDeMinas==0){
-        return "#AFBDFF";
-    }else if(numeroDeMinas==1){
-        return "#00AD00";
-    }else if(numeroDeMinas==3){
-        return "#D9D900";
-    }else if(numeroDeMinas==4){
-        return "#D99100";
-    }else if(numeroDeMinas==5){
-        return "#D93E00";
-    }else if(numeroDeMinas==6){
-        return "#AE0062";
-    }else if(numeroDeMinas==7){
-        return "#5D0091";
-    }else if(numeroDeMinas==8){
-        return "#531DFF";
-    }else if(numeroDeMinas==2){
-        return "#96CD00";
-    }else if(numeroDeMinas==-1){
-        return "#D90000";
-    }
-}
 //Borra el tablero y selector de dificultad y luego llama a la funcion que crea el tablero de dificultad.
 function volver(){
     var juego=document.getElementById("tablero");
@@ -317,30 +344,5 @@ function reiniciar(){
     colocarMinas(Math.sqrt(botones.length));
     document.getElementById("cronometroDiv").innerHTML=0;
     tiempoInicio=null;
-    clearTimeout(temporizador);
-}
-//Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
-function cronometroIniciar(){
-    tiempoInicio=new Date();
-    cronometroContinuar();
-}
-//Calcula los segundos entre que es ejecutada y se inicio el cronometro y lo imprime en el div.
-function cronometroContinuar(){
-    var tiempoActual=new Date();
-    var tiempo= tiempoActual - tiempoInicio;
-	tiempo = new Date(tiempo);
-	var segundos = tiempo.getSeconds();
-	var minutos=tiempo.getMinutes();
-	segundos+=minutos*60;
-    document.getElementById("cronometroDiv").innerHTML=segundos;
-    temporizador=setTimeout("cronometroContinuar()",100);
-}
-//Termina el juego deshabilitando los casilleros y parando el cronometro.
-function terminarJuego(){
-    var tablero=document.getElementById("tablero");
-    var botones=tablero.getElementsByTagName("input");
-    for(var i=0;i<botones.length;i++){
-        botones[i].disabled=true;
-    }
     clearTimeout(temporizador);
 }
