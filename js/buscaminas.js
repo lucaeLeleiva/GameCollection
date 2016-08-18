@@ -58,14 +58,12 @@ function obtenerColor(numeroDeMinas){
 function verificarSubCasillero(boton){
     boton.disabled=true;
     casillerosSinMinas--;
-    var tablero=document.getElementById("tablero");
-    var botones=tablero.getElementsByTagName("input");
     if(casillerosSinMinas===0){
         terminarJuego();
         alert("Has Ganado!");
     }
     var id=boton.id;
-    var indiceGuion=id.indexOf('-');
+    var indiceGuion=id.indexOf("-");
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
     var minas=contarOcultas(boton);
@@ -250,7 +248,7 @@ function dibujarTableroDificil(){
 //Cuenta la cantidad de minas alrededor de un boton dado y devuelve el numero.
 function contarOcultas(boton){
     var id=boton.id;
-    var indiceGuion=id.indexOf('-');
+    var indiceGuion=id.indexOf("-");
     var idNumero1=id.substring(0,(indiceGuion));
     var idNumero2=id.substring((indiceGuion+1));
     var cantidadDeMinas=0;
