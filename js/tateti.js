@@ -130,21 +130,21 @@ function verificarGanador(){
     var tablero = document.getElementById("tablerotateti");
     var botones = tablero.getElementsByTagName("input");
     var gano=false;
-    if(botones[0].value==botones[1].value&&botones[1].value==botones[2].value&&botones[0].value!==" "){
+    if(botones[0].value===botones[1].value&&botones[1].value===botones[2].value&&botones[0].value!==" "){
         gano=true;
-    }else if(botones[0].value==botones[3].value&&botones[3].value==botones[6].value&&botones[0].value!==" "){
+    }else if(botones[0].value===botones[3].value&&botones[3].value===botones[6].value&&botones[0].value!==" "){
         gano=true;
-    }else if(botones[0].value==botones[4].value&&botones[4].value==botones[8].value&&botones[0].value!==" "){
+    }else if(botones[0].value===botones[4].value&&botones[4].value===botones[8].value&&botones[0].value!==" "){
         gano=true;
-    }else if(botones[3].value==botones[4].value&&botones[4].value==botones[5].value&&botones[3].value!==" "){
+    }else if(botones[3].value===botones[4].value&&botones[4].value===botones[5].value&&botones[3].value!==" "){
         gano=true;
-    }else if(botones[6].value==botones[7].value&&botones[7].value==botones[8].value&&botones[6].value!==" "){
+    }else if(botones[6].value===botones[7].value&&botones[7].value===botones[8].value&&botones[6].value!==" "){
         gano=true;
-    }else if(botones[2].value==botones[5].value&&botones[5].value==botones[8].value&&botones[2].value!==" "){
+    }else if(botones[2].value===botones[5].value&&botones[5].value===botones[8].value&&botones[2].value!==" "){
         gano=true;
-    }else if(botones[2].value==botones[4].value&&botones[4].value==botones[6].value&&botones[2].value!==" "){
+    }else if(botones[2].value===botones[4].value&&botones[4].value===botones[6].value&&botones[2].value!==" "){
         gano=true;
-    }else if(botones[1].value==botones[4].value&&botones[4].value==botones[7].value&&botones[1].value!==" "){
+    }else if(botones[1].value===botones[4].value&&botones[4].value===botones[7].value&&botones[1].value!==" "){
         gano=true;
     }
     if(gano===true){
@@ -161,28 +161,12 @@ function todosDeshabilitados(){
     var botones = tablero.getElementsByTagName("input");
     var numeroDeBoton=0;
     while(numeroDeBoton<botones.length&&deshabilitado){
-        if(botones[numeroDeBoton].disabled==false){
+        if(botones[numeroDeBoton].disabled===false){
             deshabilitado=false;
         }
         numeroDeBoton++;
     }
     return deshabilitado;
-}
-//Borra el tablero y el menu de selector, y llama al creador del menu otra vez.
-function volver(){
-    ganadosJugador1=0;
-    ganadosJugador2=0;
-    actualizarMarcador();
-    numeroDeTurno=0;
-    var juego=document.getElementById("tablerotateti");
-    while(juego.firstChild){
-        juego.removeChild(juego.firstChild);
-    }
-    var selector=document.getElementById("selectorDeTipoDeJuego");
-    while(selector.firstChild){
-        selector.removeChild(selector.firstChild);
-    }
-    selectorDeTipoDeJuego();
 }
 //Se ejecutara cada vez que se haga click en un boton(Marca turnos y hace jugar a la maquina si fuera el caso).
 function turnoVs(){
@@ -213,7 +197,7 @@ function turnoVs(){
 }
 function turnoIa(){
     var jugador="X";
-    if(numeroDeTurno%2==0){
+    if(numeroDeTurno%2===0){
         this.value=jugador;
         numeroDeTurno++;
         this.disabled=true;
@@ -223,7 +207,7 @@ function turnoIa(){
             alert("Gano el jugador.");
         }
     }
-    if(numeroDeTurno%2!=0 && !todosDeshabilitados()){
+    if(numeroDeTurno%2!==0 && !todosDeshabilitados()){
         ia();
         if(verificarGanador()){
             ganadosJugador2++;
@@ -243,7 +227,7 @@ function reiniciar(){
         botones[i].disabled=false;
         botones[i].value=" ";
     }
-    if(botones[0].onclick==turnoIa&&numeroDeTurno%2!==0){
+    if(botones[0].onclick===turnoIa&&numeroDeTurno%2!==0){
         ia();
         numeroDeTurno=0;
     }
@@ -303,6 +287,22 @@ function selectorDeTipoDeJuego(){
     fila2.appendChild(tatetiia);
     document.getElementById("selectorDeTipoDeJuego").appendChild(fila1);
     document.getElementById("selectorDeTipoDeJuego").appendChild(fila2);
+}
+//Borra el tablero y el menu de selector, y llama al creador del menu otra vez.
+function volver(){
+    ganadosJugador1=0;
+    ganadosJugador2=0;
+    actualizarMarcador();
+    numeroDeTurno=0;
+    var juego=document.getElementById("tablerotateti");
+    while(juego.firstChild){
+        juego.removeChild(juego.firstChild);
+    }
+    var selector=document.getElementById("selectorDeTipoDeJuego");
+    while(selector.firstChild){
+        selector.removeChild(selector.firstChild);
+    }
+    selectorDeTipoDeJuego();
 }
 //La app inicia al cargarse la pagina
 window.onload=function(){

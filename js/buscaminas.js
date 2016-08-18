@@ -3,11 +3,6 @@ var temporizador;
 var tiempoInicio;
 //Variable auxiliar que se asigna cuando se hayan puesto las minas en el tablero.
 var casillerosSinMinas;
-//Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
-function cronometroIniciar(){
-    tiempoInicio=new Date();
-    cronometroContinuar();
-}
 //Calcula los segundos entre que es ejecutada y se inicio el cronometro y lo imprime en el div.
 function cronometroContinuar(){
     var tiempoActual=new Date();
@@ -18,6 +13,11 @@ function cronometroContinuar(){
 	segundos+=minutos*60;
     document.getElementById("cronometroDiv").innerHTML=segundos;
     temporizador=setTimeout("cronometroContinuar()",100);
+}
+//Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
+function cronometroIniciar(){
+    tiempoInicio=new Date();
+    cronometroContinuar();
 }
 //Termina el juego deshabilitando los casilleros y parando el cronometro.
 function terminarJuego(){
@@ -53,6 +53,31 @@ function obtenerColor(numeroDeMinas){
         color ="#D90000";
     }
     return color;
+}
+//Cuenta la cantidad de minas alrededor de un boton dado y devuelve el numero.
+function contarOcultas(boton){
+    var id=boton.id;
+    var indiceGuion=id.indexOf("-");
+    var idNumero1=id.substring(0,(indiceGuion));
+    var idNumero2=id.substring((indiceGuion+1));
+    var cantidadDeMinas=0;
+    var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
+    var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
+    var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var botones=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+    for(var i=0;i<botones.length;i++){
+        if(botones[i]!=null){
+            if(botones[i].value==="-1"){
+                cantidadDeMinas++;
+            }
+        }
+    }
+    return cantidadDeMinas;
 }
 //Verifica los casilleros a los cuales no se le hizo click.
 function verificarSubCasillero(boton){
@@ -244,31 +269,6 @@ function dibujarTableroDificil(){
         tablero.appendChild(fila);
     }
     colocarMinas(tamanio);
-}
-//Cuenta la cantidad de minas alrededor de un boton dado y devuelve el numero.
-function contarOcultas(boton){
-    var id=boton.id;
-    var indiceGuion=id.indexOf("-");
-    var idNumero1=id.substring(0,(indiceGuion));
-    var idNumero2=id.substring((indiceGuion+1));
-    var cantidadDeMinas=0;
-    var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-    var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-    var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-    var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
-    var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
-    var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    var botones=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
-    for(var i=0;i<botones.length;i++){
-        if(botones[i]!=null){
-            if(botones[i].value==="-1"){
-                cantidadDeMinas++;
-            }
-        }
-    }
-    return cantidadDeMinas;
 }
 //Crea y muestra el selector de dificultad.
 function dificultad(){
