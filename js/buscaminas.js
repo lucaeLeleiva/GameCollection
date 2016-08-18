@@ -30,7 +30,7 @@ function cronometroContinuar(){
 	var minutos=tiempo.getMinutes();
 	segundos+=minutos*60;
     document.getElementById("cronometroDiv").innerHTML=segundos;
-    temporizador=setTimeout("cronometroContinuar()",100);
+    temporizador=setTimeout(cronometroContinuar(),100);
 }
 //Inicia el cronometro dandole la fecha de inicio a la variable auxiliar y llamando a la funcion que continua el cronometro.
 function cronometroIniciar(){
@@ -48,28 +48,8 @@ function terminarJuego(){
 }
 //Devuelve un color en hexagecimal segun el numero pasado.
 function obtenerColor(numeroDeMinas){
-    var color="white";
-    if(numeroDeMinas===0){
-        color= "#AFBDFF";
-    }else if(numeroDeMinas===1){
-        color ="#00AD00";
-    }else if(numeroDeMinas===3){
-        color ="#D9D900";
-    }else if(numeroDeMinas===4){
-        color ="#D99100";
-    }else if(numeroDeMinas===5){
-        color ="#D93E00";
-    }else if(numeroDeMinas===6){
-        color ="#AE0062";
-    }else if(numeroDeMinas===7){
-        color ="#5D0091";
-    }else if(numeroDeMinas===8){
-        color ="#531DFF";
-    }else if(numeroDeMinas===2){
-        color ="#96CD00";
-    }else if(numeroDeMinas===-1){
-        color ="#D90000";
-    }
+    var colores=["#AFBDFF","#00AD00","#D9D900","#D99100","#D93E00","#AE0062","#5D0091","#531DFF","#96CD00","#D90000"];
+    var color=colores[numeroDeMinas];
     return color;
 }
 //Cuenta la cantidad de minas alrededor de un boton dado y devuelve el numero.
@@ -97,7 +77,7 @@ function verificarSubCasillero(boton){
     if(minas===0){
         var botonesAVerificar=casillerosContinuos(boton);
         for(var i=0;i<botonesAVerificar.length;i++){
-            if(botonesAVerificar[i]!=null){
+            if(botonesAVerificar[i]!==null){
                 if(botonesAVerificar[i].disabled===false){
                     verificarSubCasillero(botonesAVerificar[i]);
                 }
@@ -117,7 +97,7 @@ function verificarSubCasillero(boton){
 //Si no es una mina llama un metodo para verificar cuantas minas hay a su alrededor y si es 0 llama a otro metodo
 //El cual verifica los casilleros alrededor.
 function verificar(){
-    if(tiempoInicio==null){
+    if(tiempoInicio===null){
         cronometroIniciar();    
     }
     this.disabled=true;
@@ -136,7 +116,7 @@ function verificar(){
         if(minas===0){
             var botonesAVerificar=casillerosContinuos(this);
             for(var i=0;i<botonesAVerificar.length;i++){
-                if(botonesAVerificar[i]!=null){
+                if(botonesAVerificar[i]!==null){
                     if(botonesAVerificar[i].disabled===false){
                         verificarSubCasillero(botonesAVerificar[i]);
                     }
