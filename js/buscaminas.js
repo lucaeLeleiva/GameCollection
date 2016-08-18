@@ -3,6 +3,24 @@ var temporizador;
 var tiempoInicio;
 //Variable auxiliar que se asigna cuando se hayan puesto las minas en el tablero.
 var casillerosSinMinas;
+//Recibe un boton y devuelve un array con los casilleros continuos al mismo.
+function casillerosContinuos(boton){
+    var casilleros;
+    var id=boton.id;
+    var indiceGuion=id.indexOf("-");
+    var idNumero1=id.substring(0,(indiceGuion));
+    var idNumero2=id.substring((indiceGuion+1));
+    var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
+    var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
+    var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
+    var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
+    casilleros=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+    return casilleros;
+}
 //Calcula los segundos entre que es ejecutada y se inicio el cronometro y lo imprime en el div.
 function cronometroContinuar(){
     var tiempoActual=new Date();
@@ -56,20 +74,8 @@ function obtenerColor(numeroDeMinas){
 }
 //Cuenta la cantidad de minas alrededor de un boton dado y devuelve el numero.
 function contarOcultas(boton){
-    var id=boton.id;
-    var indiceGuion=id.indexOf("-");
-    var idNumero1=id.substring(0,(indiceGuion));
-    var idNumero2=id.substring((indiceGuion+1));
     var cantidadDeMinas=0;
-    var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-    var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-    var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-    var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
-    var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
-    var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-    var botones=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+    var botones=casillerosContinuos(boton);
     for(var i=0;i<botones.length;i++){
         if(botones[i]!=null){
             if(botones[i].value==="-1"){
@@ -87,21 +93,9 @@ function verificarSubCasillero(boton){
         terminarJuego();
         alert("Has Ganado!");
     }
-    var id=boton.id;
-    var indiceGuion=id.indexOf("-");
-    var idNumero1=id.substring(0,(indiceGuion));
-    var idNumero2=id.substring((indiceGuion+1));
     var minas=contarOcultas(boton);
     if(minas===0){
-        var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-        var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-        var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-        var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
-        var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
-        var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-        var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-        var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-        var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+        var botonesAVerificar=casillerosContinuos(boton);
         for(var i=0;i<botonesAVerificar.length;i++){
             if(botonesAVerificar[i]!=null){
                 if(botonesAVerificar[i].disabled===false){
@@ -118,7 +112,6 @@ function verificarSubCasillero(boton){
         boton.style.background=obtenerColor(minas);
     }
 }
-//Segun la eleccion del jugador crean un tablero acorde.
 //Se ejecuta la siguiente funcion cada vez que se hace click en un casillero
 //Verifica que el casillero no sea una mina y si es lo muestra el mensaje adecuado y deshabilita los botones
 //Si no es una mina llama un metodo para verificar cuantas minas hay a su alrededor y si es 0 llama a otro metodo
@@ -128,10 +121,6 @@ function verificar(){
         cronometroIniciar();    
     }
     this.disabled=true;
-    var id=this.id;
-    var indiceGuion=id.indexOf("-");
-    var idNumero1=id.substring(0,(indiceGuion));
-    var idNumero2=id.substring((indiceGuion+1));
     if(this.value==="-1"){
         terminarJuego();
         this.style.borderColor=obtenerColor(-1);
@@ -145,15 +134,7 @@ function verificar(){
         }
         var minas=contarOcultas(this);
         if(minas===0){
-            var boton1=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-            var boton2=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-            var boton3=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)-1).toString()));
-            var boton4=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)).toString()));
-            var boton5=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)).toString()));
-            var boton6=document.getElementById(((parseInt(idNumero1)-1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-            var boton7=document.getElementById(((parseInt(idNumero1)).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-            var boton8=document.getElementById(((parseInt(idNumero1)+1).toString())+"-"+((parseInt(idNumero2)+1).toString()));
-            var botonesAVerificar=[boton1,boton2,boton3,boton4,boton5,boton6,boton7,boton8];
+            var botonesAVerificar=casillerosContinuos(this);
             for(var i=0;i<botonesAVerificar.length;i++){
                 if(botonesAVerificar[i]!=null){
                     if(botonesAVerificar[i].disabled===false){
@@ -192,71 +173,22 @@ function colocarMinas(cantidadDeMinas){
         }
     }
 }
-function dibujarTableroFacil(){
+//Segun la eleccion del jugador crean un tablero acorde.
+function dibujarTablero(){
     document.getElementById("dificultades").style.display="none";
     document.getElementById("r").style.display="initial";
     document.getElementById("v").style.display="initial";
     document.getElementById("tablero").style.display="initial";
     var tablero=document.getElementById("tablero");
-    var tamanio=10;
+    var tamanio=this.textContent;
     for(var i=0;i<tamanio;i++){
         var fila=document.createElement("div");
         fila.setAttribute("class","fila");
         for(var j=0;j<tamanio;j++){
             var contenedor=document.createElement("div");
-            contenedor.setAttribute("class","casilleroBuscaMinasFacil");
-            var boton=document.createElement("input");
-            boton.onclick=verificar;
-            boton.setAttribute("class","botonBuscaminas");
-            boton.setAttribute("id",i+"-"+j);
-            boton.setAttribute("type","button");
-            boton.setAttribute("value","0");
-            contenedor.appendChild(boton);
-            fila.appendChild(contenedor);
-        }
-        tablero.appendChild(fila);
-    }
-    colocarMinas(tamanio);
-}
-function dibujarTableroMedio(){
-    document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="initial";
-    document.getElementById("v").style.display="initial";
-    document.getElementById("tablero").style.display="initial";
-    var tablero=document.getElementById("tablero");
-    var tamanio=30;
-    for(var i=0;i<tamanio;i++){
-        var fila=document.createElement("div");
-        fila.setAttribute("class","fila");
-        for(var j=0;j<tamanio;j++){
-            var contenedor=document.createElement("div");
-            contenedor.setAttribute("class","casilleroBuscaMinasMedio");
-            var boton=document.createElement("input");
-            boton.onclick=verificar;
-            boton.setAttribute("class","botonBuscaminas");
-            boton.setAttribute("id",i+"-"+j);
-            boton.setAttribute("type","button");
-            boton.setAttribute("value","0");
-            contenedor.appendChild(boton);
-            fila.appendChild(contenedor);
-        }
-        tablero.appendChild(fila);
-    }
-    colocarMinas(tamanio);
-}
-function dibujarTableroDificil(){
-    document.getElementById("dificultades").style.display="none";
-    document.getElementById("r").style.display="initial";
-    document.getElementById("v").style.display="initial";
-    document.getElementById("tablero").style.display="initial";
-    var tablero=document.getElementById("tablero");
-    var tamanio=50;
-    for(var i=0;i<tamanio;i++){
-        var fila=document.createElement("div");
-        fila.setAttribute("class","fila");
-        for(var j=0;j<tamanio;j++){
-            var contenedor=document.createElement("div");
-            contenedor.setAttribute("class","casilleroBuscaMinasDificil");
+            var ancho=100/tamanio;
+            contenedor.style.width=ancho+"%";
+            contenedor.setAttribute("class","casilleroBuscaMinas");
             var boton=document.createElement("input");
             boton.onclick=verificar;
             boton.setAttribute("class","botonBuscaminas");
@@ -288,12 +220,12 @@ function dificultad(){
     dificultadFacilBoton.value="Facil";
     dificultadMediaBoton.value="Medio";
     dificultadDificilBoton.value="Dificil";
-    dificultadFacilBoton.textContent="Facil";
-    dificultadMediaBoton.textContent="Medio";
-    dificultadDificilBoton.textContent="Dificil";
-    dificultadFacilBoton.onclick=dibujarTableroFacil;
-    dificultadMediaBoton.onclick=dibujarTableroMedio;
-    dificultadDificilBoton.onclick=dibujarTableroDificil;
+    dificultadFacilBoton.textContent="10";
+    dificultadMediaBoton.textContent="30";
+    dificultadDificilBoton.textContent="50";
+    dificultadFacilBoton.onclick=dibujarTablero;
+    dificultadMediaBoton.onclick=dibujarTablero;
+    dificultadDificilBoton.onclick=dibujarTablero;
     dificultadFacilBoton.setAttribute("id","botonFacil");
     dificultadMediaBoton.setAttribute("id","botonMedio");
     dificultadDificilBoton.setAttribute("id","botonDificil");
